@@ -29,11 +29,12 @@ public:
 
   static int count;
   static int countstudent();
+ friend bool compareCgpa(Student s1, Student s2);
 };
 Student::Student(string name, int rollno, float cgpa)
     : name{name}, rollno{rollno}, cgpa{cgpa}
 {
-  cout << "constructor called for " << name << endl;
+ // cout << "constructor called for " << name << endl;
 }
 
 string Student::get_name()
@@ -89,6 +90,9 @@ char Student::grade()
     return 'F';
   }
 }
+bool compareCgpa(Student s1, Student s2) {
+  return (s1.cgpa > s2.cgpa);
+}
 
 void Student::print_details()
 {
@@ -99,7 +103,7 @@ void Student::print_details()
 
 Student::~Student()
 {
-  cout << " destructor called for  " << name << endl;
+
 }
 
 int Student::count = 0;
@@ -141,6 +145,7 @@ int main()
     cout << "1. Change name" << endl;
     cout << "2. Change roll number" << endl;
     cout << "3. Change cgpa" << endl;
+    cout<<"4.Compare cgpa with other student"<<endl;
     cout << "Choosen Operation is: ";
     cin >> operation;
 
@@ -176,7 +181,29 @@ int main()
       cout << "Grade " << s1.grade() << endl;
       cout << "Number of students: " << Student::countstudent << endl;
       break;
-    default:
+ case 4:
+  cout << "Enter the name of the other student: ";
+      cin >> name;
+      cout << "Enter the roll number of the other student: ";
+      cin >> rollno;
+      cout << "Enter the cgpa of the other student: ";
+      cin >> cgpa;
+      
+      Student s2(name,rollno,cgpa);
+     
+  
+      if (compareCgpa(s1, s2)) {
+        cout << s1.get_name() << " has higher cgpa than " << s2.get_name() << endl;
+      }
+      else if (compareCgpa(s2, s1)) {
+      	cout << s2.get_name() << " has higher cgpa than " << s1.get_name() << endl;
+      }
+      else {
+        cout << s1.get_name() << " and " << s2.get_name() << " have equal cgpa" << endl;
+      }
+      break;
+    
+    Default:
       cout << "Please enter a valid operation." << endl;
       break;
     }
